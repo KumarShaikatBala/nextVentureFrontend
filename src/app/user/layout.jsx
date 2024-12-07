@@ -1,6 +1,5 @@
 import SideNav from "@/app/layouts/SideNav";
 import Image from "next/image";
-import logo from "@public/logo.png";
 
 export default function DashboardLayout({ children }) {
   return (
@@ -22,13 +21,7 @@ export default function DashboardLayout({ children }) {
             Design And Developed By
             </p>
             <div className="max-w-[140px]  xl:mb-2 xl:w-[90px] 2xl:max-w-[141px] -mt-2 ">
-              <Image
-                src={logo}
-                alt="Logo"
-                placeholder={"blur"}
-                blurDataURL={"data:..."}
-                className="w-full h-full"
-              />
+      Shaikat
             </div>
           </div>
         </div>

@@ -1,7 +1,10 @@
 import serverFetch from "@/fetch/server";
 import AddToCart from "@/components/AddToCart";
+import Image from "next/image";
+import placeholder from "@public/image.png";
 export default async function Product({ params }){
-    const product = await serverFetch([`products/${params.product}`]);
+    const data = await serverFetch([`products/${params.product}`]);
+    const product = data?.data;
     return (
         <>
             <div className="font-sans">
@@ -20,6 +23,11 @@ export default async function Product({ params }){
 
 
                         <div className="mt-8 space-y-4 max-w-xs">
+                            <Image width={96000}
+                                   height={96}
+                                   src={placeholder}
+                                   alt={product?.name}
+                                   className="w-[300px] h-[300px]"/>
                             <AddToCart product={product}/>
 
 

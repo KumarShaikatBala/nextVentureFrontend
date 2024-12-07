@@ -71,13 +71,28 @@ export const AuthProvider = ({children}) => {
     useEffect(() => {
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
     }, [cartItems]); // Include cartItems as a dependency here
-
+    useLayoutEffect(() => {
+        if (token) {
+            fetchUser();
+            const cookies = parseCookies()
+            const authCookies = cookies.token || '';
+            if (!authCookies) {
+                setCookie(null, 'token', token)
+            }
+        } else {
+            ['token', 'type'].forEach((cookieName) => {
+                destroyCookie(null, cookieName);
+                destroyCookie(undefined, cookieName);
+            });
+            setLoading(false);
+        }
+    }, [token]);
     const fetchUser = async () => {
         try {
-            const response = await axios.get('auth');
+            const response = await axios.get('profile');
             if (response) {
-                setRoles(response.data.data.type)
-                const type = btoa(response.data.data.type);
+                setRoles(response.data.data.role)
+                const type = btoa(response.data.data.role);
                 setCookie(null, "type", type);
                 setUser(response.data.data)
                 setPermissions(response.data.permissions)

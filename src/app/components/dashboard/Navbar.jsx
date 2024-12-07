@@ -4,10 +4,13 @@ import React from "react";
 import DosIcon from "../common/DosIcon";
 import {Avatar, IconButton, ListItemIcon, Menu, MenuItem} from "@mui/material";
 import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+import Loading from "@/app/components/common/Loading";
+import {useAuth} from "@/context/AuthContext";
 
 function Navbar({toggleSidebar}) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+    const {user, logout, isLoading} = useAuth();
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -53,24 +56,17 @@ function Navbar({toggleSidebar}) {
 
                     <div className="flex items-center gap-2 ">
                         <div className="text-end">
-{/*                            {isLoading ? (
+                            {isLoading ? (
                                 <Loading/>
                             ) : (
                                 <>
                                     {user && (
                                         <>
-                                            {user.institute ? (
-                                                <small>{user?.institute} - {user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1)}</small>
-                                            ) : (
-                                                <h5 className="text-sm font-bold">
-                                                    {user?.name?.charAt(0).toUpperCase() + user?.name?.slice(1)}
-                                                </h5>
-                                            )}
                                             <p>{user?.username}</p>
                                         </>
                                     )}
                                 </>
-                            )}*/}
+                            )}
                         </div>
 
                         <div>
@@ -81,17 +77,6 @@ function Navbar({toggleSidebar}) {
                                 aria-haspopup="true"
                                 aria-expanded={open ? "true" : undefined}
                             >
-{/*                                {user?.image ? (
-                                    <Image
-                                        src={user.image}
-                                        alt="User Image"
-                                        width={32}
-                                        height={32}
-                                        blurDataURL={`data:${user.image}`}
-                                    />
-                                ) : (
-                                    <Avatar sx={{width: 32, height: 32}} alt="User Image" src=""/>
-                                )}*/}
                             </IconButton>
 
                             <Menu
@@ -129,12 +114,7 @@ function Navbar({toggleSidebar}) {
                                 transformOrigin={{horizontal: "right", vertical: "top"}}
                                 anchorOrigin={{horizontal: "right", vertical: "bottom"}}
                             >
-                                {/*                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <PersonAdd fontSize="small" />
-                  </ListItemIcon>
-                  Add another account
-                </MenuItem>*/}
+
 
                                 <MenuItem >
                                     <div style={{display: "flex", alignItems: "center"}}>
@@ -148,18 +128,7 @@ function Navbar({toggleSidebar}) {
                                         
                                     </div>
                                 </MenuItem>
-                                <MenuItem >
-                                    <Link href={"/user-settings"} className="flex items-center ">
-                                        <ListItemIcon>
-                                            <SettingsApplicationsIcon fontSize="small"/>
-                                        </ListItemIcon>
-                                        <p
-                                           className=" text-[18px]">
-                                            Settings
-                                        </p>
-                                        
-                                    </Link>
-                                </MenuItem>
+
                             </Menu>
                         </div>
                     </div>

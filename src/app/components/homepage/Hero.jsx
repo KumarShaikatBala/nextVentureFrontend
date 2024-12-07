@@ -6,7 +6,7 @@ import AddToCart from "@/components/AddToCart";
 
 export default async function Hero() {
     const productsData = await serverFetch(['products']);
-    const products = productsData?.data;
+    const products = productsData?.data.data;
     return (
         <>
             <div className="bg-gradient-to-r from-blue-700 to-[#B06AB3] font-sans px-6 py-12">
@@ -33,7 +33,7 @@ export default async function Hero() {
                 </div>
             </div>
 
-
+            {products?.length > 0 && (
             <div className="p-1 flex flex-wrap items-center justify-center">
                 {products?.map((product, index) => (
                     <div key={index}
@@ -99,6 +99,7 @@ export default async function Hero() {
                     </div>
                 ))}
             </div>
+            )}
 
 
         </>

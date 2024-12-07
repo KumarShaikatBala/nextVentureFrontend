@@ -7,9 +7,6 @@ import Header from "@/app/components/Header";
 export const metadata = {
   title: "Shaikat Tomal Ecommerce",
   description: "Tomal Shaikat is a full-stack web developer who specializes in building (and occasionally designing) exceptional digital experiences.",
-  icons: {
-    icon: "/logo/dos_logo.png",
-  },
 };
 export default function HomepageLayout({ children }) {
   return (

@@ -3,14 +3,14 @@ import React, {useContext, useState} from 'react';
 import {ShoppingCart} from "@mui/icons-material";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@public/logo.png";
-import {AuthContext} from '@/context/AuthContext'
+import {AuthContext, useAuth} from '@/context/AuthContext'
 import MenuIcon from '@mui/icons-material/Menu';
-
+import Loading from "@/app/components/common/Loading";
+import LogoutIcon from '@mui/icons-material/Logout';
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const {cartItems} = useContext(AuthContext)
-
+    const {user, logout, isLoading} = useAuth();
     const handleClick = () => {
         setIsMenuOpen(prevState => !prevState);
     };
@@ -34,13 +34,7 @@ const Header = () => {
                     <ul className="lg:flex lg:gap-x-3 max-lg:space-y-3">
                         <li className="mb-6 hidden max-lg:block">
                             <Link href="/" className="inline-block">
-                                <Image
-                                    src={logo}
-                                    alt="logo"
-                                    width={36}
-                                    height={48}
-                                    className="w-48"
-                                />
+01617777010
                             </Link>
                         </li>
                         <li className="max-lg:border-b max-lg:py-3 px-3">
@@ -79,11 +73,42 @@ const Header = () => {
                             </span>
                             </Link>
                         )}
+
+                        {isLoading ? (
+                            <Loading/>
+                        ) : user ? (
+                            <>
+                                <Link href="/user/dashboard"
+                                      className="px-5 py-2 text-sm rounded-full text-white border-2 border-[#007bff] bg-[#007bff] hover:bg-[#004bff]"
+                                >
+                                    {user.name}    Dashboard
+                                </Link>
+
+
+
+
+                                <button
+                                    onClick={logout}
+                                    className=" border px-2.5 py-1 flex items-center gap-2 rounded-md hover:text-red-600 text-baseblue text-center font-inter text-xs font-bold font-inter leading-normal sm:text-[11px]  xl:text-base"
+                                >
+                                     Logout
+                                    < LogoutIcon/>
+                                </button>
+
+
+                            </>
+
+                            ) : (
+
+
+
+
                         <Link href="/login"
                             className="px-5 py-2 text-sm rounded-full text-white border-2 border-[#007bff] bg-[#007bff] hover:bg-[#004bff]"
                         >
                             Sign In
                         </Link>
+                    )}
                         <button id="toggleOpen" className="lg:hidden" onClick={handleClick}>
                             <MenuIcon/>
                         </button>

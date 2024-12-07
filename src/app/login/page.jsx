@@ -1,7 +1,6 @@
 "use client";
 import Loading from "@/app/components/common/Loading";
 import axios from "@/axios/axiosInstance";
-import {useAuth} from "@/context/AuthContext";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -24,7 +23,6 @@ import {FormControl, FormHelperText, InputLabel} from "@mui/material";
 export default function LogIn() {
     const [username, setUser] = React.useState();
     const [password, setPassword] = React.useState();
-    const {fetchUser, fetchStatus} = useAuth();
     const router = useRouter();
     const [isLoading, setIsLoading] = React.useState(false);
     const [formErrors, setFormErrors] = useState({});
@@ -71,23 +69,27 @@ export default function LogIn() {
                 {abortEarly: false}
             );
             axios
-                .post("users/login/", {
+                .post("login/", {
                     email: username,
                     password: password,
                     login_details: navigator.userAgent ? navigator.userAgent : "",
                 })
                 .then(
                     (response) => {
-                        if (response.status === 200) {
+                        if (response.data?.status) {
                             toast.success("Login Successful");
-                            const type = btoa('customer');
+                            const type = btoa(response.data?.type);
                             if (typeof window !== "undefined") {
-                                localStorage.setItem("token", response.data.access);
-                                setCookie(null, "token", response.data.access, {});
+                                localStorage.setItem("token", response.data?.token);
+                                setCookie(null, "token", response.data?.token, {});
                                 setCookie(null, "type", type);
                             }
                             setIsLoading(false);
-                            router.push("/user/dashboard");
+                            if (response.data?.type === "admin") {
+                                router.push("/user/dashboard");
+                            } else {
+                                router.push("/");
+                            }
                         }
                     },
                     (error) => {

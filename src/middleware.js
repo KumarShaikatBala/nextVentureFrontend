@@ -1,12 +1,11 @@
 import {NextResponse} from 'next/server';
 
 const userRoutes = {
-    customer: [
+    admin: [
         '/user/dashboard',
         '/user/profile',
     ],
 };
-
 
 export const middleware = (request) => {
     const pathVariable = request.nextUrl.pathname;
@@ -18,6 +17,7 @@ export const middleware = (request) => {
     // Get authentication and user type from cookies
     const authCookie = request.cookies.get("token");
     const typeCookie = request.cookies.get("type");
+    console.log('typeCookiexx',request.cookies.get("type"))
     // const updateCookie = request.cookies.get("updated");
     const auth = authCookie ? authCookie.value : null;
     const userType = typeCookie ? atob(typeCookie.value) : null;
@@ -25,7 +25,6 @@ export const middleware = (request) => {
 
     // Map user type to internal representation
     const mappedUserType = userRoutes[userType] ? userType : null;
-
     // Redirect if not authenticated and trying to access a protected route
     if (!auth && pathVariable.startsWith('/user')) {
         return NextResponse.redirect(new URL("/login", request.url));
