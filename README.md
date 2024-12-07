@@ -3,6 +3,34 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ## Getting Started
 frontend
 
+BASE_URL: "http://localhost:3445/api/"
+
+
+must run backend first
+
+
+
+
+
+
+
+## setup using npm
+go to project directory
+
+# install dependencies
+
+npm/yarn install
+
+npx/yarn build
+
+
+# start the server
+npm/yarn start
+
+
+
+
+
 # setup using docker
 docker-compose build
 docker-compose up -d
