@@ -21,34 +21,25 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Registration() {
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [address, setAddress] = useState();
-    const [mobile, setMobile] = useState();
+    const [name, setName] = useState();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPasword] = useState();
-    const [dob, setDob] = useState("");
     const router = useRouter();
     const [formErrors, setFormErrors] = useState({});
     const [showPassword, setShowPassword] = useState(false);
     useEffect(() => {
         const updatedErrors = {};
-        if (firstName !== "") {
-            updatedErrors.firstName = "";
+        if (name !== "") {
+            updatedErrors.name = "";
         } else {
-            updatedErrors.firstName = "Input your first name";
-        }
-        if (lastName !== "") {
-            updatedErrors.lastName = "";
-        } else {
-            updatedErrors.lastName = "Input your last name";
+            updatedErrors.name = "Input your name";
         }
 
-        if (mobile !== "") {
-            updatedErrors.mobile = "";
+        if (email !== "") {
+            updatedErrors.email = "";
         } else {
-            updatedErrors.mobile = "Input your mobile number";
+            updatedErrors.email = "Input your email";
         }
 
         if (password !== "") {
@@ -67,12 +58,10 @@ export default function Registration() {
             ...prevErrors,
             ...updatedErrors,
         }));
-    }, [firstName, lastName, password, mobile, confirmPassword]);
+    }, [name, password, confirmPassword]);
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required("Provide your first name"),
-        lastName: Yup.string().required("Provide your last name"),
-        mobile: Yup.string().required("Provide your mobile number"),
+        name: Yup.string().required("Provide your first name"),
         email: Yup.string().email("Provide a valid email address"),
         password: Yup.string().required("Provide a password"),
         confirmPassword: Yup.string().required("Provide a confirm password").oneOf([Yup.ref("password"), null], "Passwords must match")
@@ -90,22 +79,20 @@ export default function Registration() {
         event.preventDefault();
         try {
             await validationSchema.validate(
-                {firstName, lastName, mobile, password, confirmPassword, email},
+                {name, password, confirmPassword, email},
                 {abortEarly: false}
             );
             const formData = new FormData();
-            formData.append("first_name", firstName);
-            formData.append("last_name", lastName);
-            formData.append("mobile_number", mobile);
+            formData.append("name", name);
             formData.append("email", email);
             formData.append("password", password);
             formData.append("password_confirmation", confirmPassword);
-            const response = await axios.post("users/register/", formData, {
+            const response = await axios.post("register/", formData, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-         if (response.status === 200) {
+         if (response.data.status) {
                 toast.success("Registration successful");
                 router.push("/login");
             }
@@ -150,58 +137,16 @@ export default function Registration() {
                                     required
                                     fullWidth
                                     id="firstName"
-                                    label="First Name"
-                                    name="firstName"
+                                    label="Name"
+                                    name="name"
                                     autoComplete="text"
                                     autoFocus
-                                    value={firstName || ""}
+                                    value={name || ""}
                                     onChange={(e) => {
-                                        setFirstName(e.target.value);
+                                        setName(e.target.value);
                                     }}
-                                    error={!!formErrors.firstName}
-                                    helperText={formErrors.firstName && formErrors.firstName}
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    size="medium"
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="text"
-                                    autoFocus
-                                    value={lastName || ""}
-                                    onChange={(e) => {
-                                        setLastName(e.target.value);
-                                    }}
-                                    error={!!formErrors.lastName}
-                                    helperText={formErrors.lastName && formErrors.lastName}
-                                />
-                            </Grid>
-
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    size="medium"
-                                    required
-                                    fullWidth
-                                    id="mobile"
-                                    label="Mobile Number"
-                                    name="mobile"
-                                    type="number"
-                                    className=" text-[16px]"
-                                    autoComplete="text"
-                                    autoFocus
-                                    value={mobile || ""}
-                                    onChange={(e) => {
-                                        setMobile(e.target.value);
-                                    }}
-
-                                    error={!!formErrors.mobile}
-                                    helperText={formErrors.mobile && formErrors.mobile}
+                                    error={!!formErrors.name}
+                                    helperText={formErrors.name && formErrors.name}
                                 />
                             </Grid>
                             <Grid item xs={12}>

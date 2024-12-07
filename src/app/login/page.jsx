@@ -88,7 +88,7 @@ export default function LogIn() {
                             if (response.data?.type === "admin") {
                                 router.push("/user/dashboard");
                             } else {
-                                router.push("/");
+                                router.push("/user/orders");
                             }
                         }
                     },

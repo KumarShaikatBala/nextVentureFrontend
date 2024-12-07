@@ -20,7 +20,7 @@ export default async function Dashboard({searchParams}) {
             <div className="p-2 md:p-6">
                 <div className="p-4 bg-white rounded shadow space-y-2">
                     <div className="sm:flex justify-between items-center ">
-                        <p className="font-bold text-base">All Orders Admin Dashboard</p>
+                        <p className="font-bold text-base">My Orders</p>
                     </div>
                     <div className="overflow-x-auto">
                         <table className="w-full border-collapse border text-sm  text-left rtl:text-right text-gray-500 ">

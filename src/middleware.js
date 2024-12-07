@@ -2,8 +2,10 @@ import {NextResponse} from 'next/server';
 
 const userRoutes = {
     admin: [
-        '/user/dashboard',
-        '/user/profile',
+        '/user/dashboard'
+    ],
+    user: [
+        '/user/orders'
     ],
 };
 

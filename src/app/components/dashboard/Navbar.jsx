@@ -1,9 +1,8 @@
 import Logout from "@mui/icons-material/Logout";
 import Link from "next/link";
 import React from "react";
-import DosIcon from "../common/DosIcon";
 import {Avatar, IconButton, ListItemIcon, Menu, MenuItem} from "@mui/material";
-import SettingsApplicationsIcon from "@mui/icons-material/SettingsApplications";
+
 import Loading from "@/app/components/common/Loading";
 import {useAuth} from "@/context/AuthContext";
 
@@ -45,7 +44,7 @@ function Navbar({toggleSidebar}) {
                         </button>
 
                         <Link href="/" className="flex ms-2 gap-2 md:me-24">
-                            <DosIcon/>
+
                             <span className="self-center text-xl font-semibold whitespace-nowrap ">
                 Shaikat Tomal
               </span>
